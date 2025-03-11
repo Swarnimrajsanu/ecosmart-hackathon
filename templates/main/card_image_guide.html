@@ -1,0 +1,180 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Card Image Guide - EcoSmart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">How to Add Images to Cards</h1>
+    <p class="lead mb-5">This guide shows different ways to add images to Bootstrap cards in your EcoSmart website.</p>
+
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-lg mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Basic Card with Image</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Example:</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-img-top bg-light text-center py-5">
+                                    <i class="fas fa-image fa-3x text-success"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Card Title</h5>
+                                    <p class="card-text">This is a basic card with an image at the top.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="h6 mb-3">HTML Code:</h4>
+                            <pre class="bg-light p-3 rounded"><code>&lt;div class="card h-100"&gt;
+    &lt;img src="{% verbatim %}{% static 'images/example-image.jpg' %}{% endverbatim %}" class="card-img-top" alt="Example image"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Card Title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;This is a basic card with an image at the top.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-lg mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Card with Dynamic Image from Model</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Example:</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-img-top bg-light text-center py-5">
+                                    <i class="fas fa-database fa-3x text-primary"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Model Title</h5>
+                                    <p class="card-text">This card displays an image from a Django model.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="h6 mb-3">HTML Code:</h4>
+                            <pre class="bg-light p-3 rounded"><code>&lt;div class="card h-100"&gt;
+    &lt;img src="{% verbatim %}{{ model_instance.image.url }}{% endverbatim %}" class="card-img-top" alt="{% verbatim %}{{ model_instance.title }}{% endverbatim %}"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;{% verbatim %}{{ model_instance.title }}{% endverbatim %}&lt;/h5&gt;
+        &lt;p class="card-text"&gt;{% verbatim %}{{ model_instance.description }}{% endverbatim %}&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-lg mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Card with Conditional Image</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Example:</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-img-top bg-light text-center py-5">
+                                    <i class="fas fa-image fa-3x text-success"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Fallback Image</h5>
+                                    <p class="card-text">This card shows an icon when no image is available.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="h6 mb-3">HTML Code:</h4>
+                            <pre class="bg-light p-3 rounded"><code>{% verbatim %}{% if model_instance.image %}
+    &lt;img src="{{ model_instance.image.url }}" class="card-img-top" alt="{{ model_instance.title }}"&gt;
+{% else %}
+    &lt;div class="card-img-top bg-light text-center py-5"&gt;
+        &lt;i class="fas fa-image fa-3x text-success"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+{% endif %}{% endverbatim %}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 rounded-lg sticky-top" style="top: 100px;">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h4 mb-0">Tips for Card Images</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h5 class="mb-1">Image Dimensions</h5>
+                            <p class="mb-0">For consistent appearance, use images with the same aspect ratio (e.g., 16:9 or 4:3).</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-1">File Size</h5>
+                            <p class="mb-0">Optimize images for web to keep file sizes small and improve page load times.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-1">Alt Text</h5>
+                            <p class="mb-0">Always include descriptive alt text for accessibility and SEO.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-1">Responsive Images</h5>
+                            <p class="mb-0">Bootstrap's <code>card-img-top</code> class makes images responsive by default.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-lg mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h4 mb-0">Adding Images to Your Models</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="h5 mb-3">Model Definition:</h3>
+                    <pre class="bg-light p-3 rounded"><code>from django.db import models
+
+class YourModel(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='your_model_images/', null=True, blank=True)
+    
+    def __str__(self):
+        return self.title</code></pre>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="h5 mb-3">Form with File Upload:</h3>
+                    <pre class="bg-light p-3 rounded"><code>from django import forms
+from .models import YourModel
+
+class YourModelForm(forms.ModelForm):
+    class Meta:
+        model = YourModel
+        fields = ['title', 'description', 'image']
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control', 
+                'accept': 'image/*'
+            }),
+        }</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

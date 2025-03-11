@@ -1,0 +1,214 @@
+/* General Styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+
+/* Navbar Styles */
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+
+/* Hero Section */
+
+.hero-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 4rem 2rem;
+    margin-bottom: 3rem;
+}
+
+
+/* Card Styles */
+
+.card {
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+/* Feature Icons */
+
+.features-section .fa-3x {
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+
+/* Category Cards */
+
+.categories-section .card {
+    overflow: hidden;
+}
+
+.categories-section .card-img-top {
+    height: 150px;
+    background-color: #f8f9fa;
+}
+
+
+/* Educational Content */
+
+.educational-content-section .card-img-top {
+    height: 180px;
+}
+
+
+/* CTA Section */
+
+.cta-section {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    padding: 4rem 2rem;
+    margin-top: 3rem;
+}
+
+
+/* Button Styles */
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+
+/* Footer Styles */
+
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 3rem 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #28a745;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+    .card-img-top {
+        height: 150px;
+    }
+    .cta-section {
+        padding: 2rem 1rem;
+    }
+}
+
+
+/* Animation */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+
+/* Form Styles */
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+
+/* Alert Styles */
+
+.alert {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Status Badges */
+
+.badge {
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.badge-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-scheduled {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.badge-completed {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-cancelled {
+    background-color: #dc3545;
+    color: #fff;
+}

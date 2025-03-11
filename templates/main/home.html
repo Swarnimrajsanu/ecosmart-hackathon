@@ -1,0 +1,130 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Welcome to EcoSmart - Waste Management System{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center py-5 bg-light rounded">
+    <h1 class="display-4 mb-4">Welcome to EcoSmart</h1>
+    <p class="lead mb-4">Your smart solution for efficient waste management and recycling</p>
+    {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}" class="btn btn-success btn-lg me-3">Get Started</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-success btn-lg">Login</a>
+    {% else %}
+        <a href="{% url 'request_collection' %}" class="btn btn-success btn-lg">Request Collection</a>
+    {% endif %}
+</div>
+
+<!-- AI Features Section -->
+<section class="ai-features-section my-5">
+    <h2 class="text-center mb-4">AI-Powered Features</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-camera fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title h4">AI Waste Classifier</h3>
+                    <p class="card-text">Upload an image of waste, and our AI will identify what type of waste it is and how it should be disposed of or recycled.</p>
+                    <a href="{% url 'waste_classifier' %}" class="btn btn-primary mt-3">Try It Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title h4">EcoBot AI Assistant</h3>
+                    <p class="card-text">Chat with our AI assistant to get answers to your waste management and recycling questions in real-time.</p>
+                    <a href="{% url 'chatbot' %}" class="btn btn-primary mt-3">Chat Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section my-5">
+    <h2 class="text-center mb-4">Our Services</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-truck fa-3x text-success mb-3"></i>
+                    <h3 class="card-title h5">Waste Collection</h3>
+                    <p class="card-text">Schedule convenient pickups for your waste materials</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-recycle fa-3x text-success mb-3"></i>
+                    <h3 class="card-title h5">Recycling</h3>
+                    <p class="card-text">Find nearby recycling centers and learn about proper recycling</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-graduation-cap fa-3x text-success mb-3"></i>
+                    <h3 class="card-title h5">Education</h3>
+                    <p class="card-text">Learn about sustainable waste management practices</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="categories-section my-5">
+    <h2 class="text-center mb-4">Waste Categories</h2>
+    <div class="row g-4">
+        {% for category in categories %}
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm">
+                {% if category.icon %}
+                    <img src="{{ category.icon.url }}" class="card-img-top" alt="{{ category.name }}">
+                {% else %}
+                    <div class="card-img-top bg-light text-center py-3">
+                        <i class="fas fa-trash fa-2x text-success"></i>
+                    </div>
+                {% endif %}
+                <div class="card-body text-center">
+                    <h3 class="card-title h5">{{ category.name }}</h3>
+                    <p class="card-text small">{{ category.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="educational-content-section my-5">
+    <h2 class="text-center mb-4">Latest Updates</h2>
+    <div class="row g-4">
+        {% for content in educational_content %}
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                {% if content.image %}
+                    <img src="{{ content.image.url }}" class="card-img-top" alt="{{ content.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title h5">{{ content.title }}</h3>
+                    <p class="card-text">{{ content.content|truncatewords:30 }}</p>
+                    <a href="{% url 'educational_content' %}" class="btn btn-outline-success">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="cta-section text-center py-5 bg-success text-white rounded">
+    <h2 class="mb-4">Ready to Make a Difference?</h2>
+    <p class="lead mb-4">Join our community of environmentally conscious citizens</p>
+    {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}" class="btn btn-light btn-lg">Sign Up Now</a>
+    {% else %}
+        <a href="{% url 'request_collection' %}" class="btn btn-light btn-lg">Request Collection</a>
+    {% endif %}
+</section>
+{% endblock %} 

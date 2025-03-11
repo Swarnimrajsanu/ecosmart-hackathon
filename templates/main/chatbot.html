@@ -1,0 +1,241 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}EcoBot AI Assistant - EcoSmart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2 class="h4 mb-0"><i class="fas fa-robot me-2"></i>EcoBot AI Assistant</h2>
+                    <button id="clearChat" class="btn btn-sm btn-outline-light">
+                        <i class="fas fa-trash me-1"></i>Clear Chat
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <div id="chatMessages" class="chat-messages p-3" style="height: 400px; overflow-y: auto;">
+                        {% if not chat_history %}
+                            <div class="text-center my-5">
+                                <div class="mb-3">
+                                    <i class="fas fa-robot fa-3x text-primary"></i>
+                                </div>
+                                <h3 class="h5">Welcome to EcoBot!</h3>
+                                <p class="text-muted">I'm your AI assistant for waste management and recycling questions.</p>
+                                <p class="text-muted">Try asking me:</p>
+                                <div class="d-flex flex-column gap-2 mt-3">
+                                    <button class="btn btn-outline-primary btn-sm suggestion-btn">How do I recycle batteries?</button>
+                                    <button class="btn btn-outline-primary btn-sm suggestion-btn">What can I do with old electronics?</button>
+                                    <button class="btn btn-outline-primary btn-sm suggestion-btn">How to reduce plastic waste?</button>
+                                </div>
+                            </div>
+                        {% else %}
+                            {% for message in chat_history %}
+                                <div class="chat-message {% if message.message_type == 'user' %}user-message{% else %}assistant-message{% endif %} mb-3">
+                                    <div class="message-content p-3 rounded">
+                                        {{ message.content|linebreaks }}
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">
+                                        {{ message.created_at|time:"g:i A" }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="chat-input p-3 border-top">
+                        <form method="post" id="chatForm">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                {{ form.content }}
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm border-0 rounded-lg mt-4">
+                <div class="card-header bg-light">
+                    <h3 class="h5 mb-0">About EcoBot</h3>
+                </div>
+                <div class="card-body">
+                    <p>EcoBot is an AI assistant specialized in waste management and recycling. It can help you with:</p>
+                    <ul class="mb-0">
+                        <li>Identifying recyclable materials</li>
+                        <li>Providing disposal instructions for different types of waste</li>
+                        <li>Offering tips for reducing waste</li>
+                        <li>Explaining recycling processes and benefits</li>
+                        <li>Answering questions about local recycling programs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    .chat-messages {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-message {
+        max-width: 80%;
+        margin-bottom: 15px;
+    }
+    
+    .user-message {
+        align-self: flex-end;
+    }
+    
+    .assistant-message {
+        align-self: flex-start;
+    }
+    
+    .user-message .message-content {
+        background-color: #007bff;
+        color: white;
+        border-radius: 18px 18px 0 18px;
+    }
+    
+    .assistant-message .message-content {
+        background-color: #f0f2f5;
+        color: #212529;
+        border-radius: 18px 18px 18px 0;
+    }
+    
+    .user-message .message-time {
+        text-align: right;
+    }
+    
+    .assistant-message .message-time {
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const clearChatBtn = document.getElementById('clearChat');
+        const suggestionBtns = document.querySelectorAll('.suggestion-btn');
+        
+        // Scroll to bottom of chat
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Initial scroll to bottom
+        scrollToBottom();
+        
+        // Handle form submission with AJAX
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(chatForm);
+            const userMessage = formData.get('content');
+            
+            if (!userMessage.trim()) return;
+            
+            // Add user message to chat
+            addMessage(userMessage, 'user');
+            
+            // Clear input
+            document.getElementById('id_content').value = '';
+            
+            // Show loading indicator
+            const loadingMessage = addLoadingMessage();
+            
+            // Send request to server
+            fetch('{% url "chatbot" %}', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading indicator
+                loadingMessage.remove();
+                
+                // Add assistant response
+                addMessage(data.assistant_message, 'assistant');
+            })
+            .catch(error => {
+                // Remove loading indicator
+                loadingMessage.remove();
+                
+                // Add error message
+                addMessage('Sorry, there was an error processing your request. Please try again.', 'assistant');
+                console.error('Error:', error);
+            });
+        });
+        
+        // Add message to chat
+        function addMessage(content, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}-message mb-3`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: 'numeric', minute:'2-digit'});
+            
+            messageDiv.innerHTML = `
+                <div class="message-content p-3 rounded">${content.replace(/\n/g, '<br>')}</div>
+                <div class="message-time text-muted small mt-1">${timeString}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+            
+            return messageDiv;
+        }
+        
+        // Add loading message
+        function addLoadingMessage() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'chat-message assistant-message mb-3';
+            loadingDiv.innerHTML = `
+                <div class="message-content p-3 rounded">
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Thinking</span>
+                        <div class="spinner-grow spinner-grow-sm text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(loadingDiv);
+            scrollToBottom();
+            
+            return loadingDiv;
+        }
+        
+        // Clear chat
+        clearChatBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear the chat history?')) {
+                window.location.href = '{% url "chatbot" %}?clear=true';
+            }
+        });
+        
+        // Handle suggestion buttons
+        suggestionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('id_content').value = this.textContent;
+                chatForm.dispatchEvent(new Event('submit'));
+            });
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %} 

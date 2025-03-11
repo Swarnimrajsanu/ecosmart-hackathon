@@ -1,0 +1,527 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Urban Roof Plantation - EcoSmart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-3">Urban Roof Plantation</h1>
+            <p class="lead mb-4">Transform urban spaces into green havens with sustainable roof gardens and plantations.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#benefits" class="btn btn-success">Benefits</a>
+                <a href="#get-started" class="btn btn-outline-success">Get Started</a>
+                <a href="#plants" class="btn btn-outline-success">Recommended Plants</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Image Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1591443062886-8e2daa81f3f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                             class="w-100" style="height: 400px; object-fit: cover;" alt="Urban Roof Garden">
+                        <div class="position-absolute bottom-0 start-0 w-100 p-4" 
+                             style="background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);">
+                            <h2 class="text-white mb-0">Creating Green Spaces in Concrete Jungles</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h2 class="mb-4">Why Urban Roof Plantation Matters</h2>
+                    <p>As cities expand and green spaces shrink, urban roof plantations offer a sustainable solution to bring nature back into our concrete jungles. Roof gardens not only beautify urban landscapes but also provide numerous environmental, economic, and social benefits.</p>
+                    <p>Urban roof plantations can range from simple container gardens to elaborate green roof systems. They can be implemented on residential buildings, commercial complexes, schools, hospitals, and even industrial structures.</p>
+                    <p>By utilizing unused roof spaces, cities can combat the urban heat island effect, improve air quality, manage stormwater runoff, and create habitats for urban wildlife, all while providing residents with access to green spaces and locally grown produce.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100 bg-light">
+                <div class="card-body p-4">
+                    <h3 class="h4 mb-3">Quick Facts</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent border-0 ps-0">
+                            <i class="fas fa-temperature-high text-danger me-2"></i>
+                            Roof gardens can reduce building temperatures by 3-4°C
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 ps-0">
+                            <i class="fas fa-tint text-primary me-2"></i>
+                            They can retain 70-90% of rainfall in summer
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 ps-0">
+                            <i class="fas fa-leaf text-success me-2"></i>
+                            A 1,000 sq ft green roof can remove about 40 pounds of particulate matter from the air annually
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 ps-0">
+                            <i class="fas fa-home text-warning me-2"></i>
+                            Green roofs can extend roof life by 2-3 times
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 ps-0">
+                            <i class="fas fa-seedling text-success me-2"></i>
+                            Urban gardens can produce 15-20 kg of food per square meter annually
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="row mb-5" id="benefits">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-5">Benefits of Roof Plantation</h2>
+            <p class="lead">Discover how roof gardens can transform urban living</p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <div class="rounded-circle bg-success bg-opacity-10 p-3 d-inline-flex mb-3">
+                        <i class="fas fa-wind fa-2x text-success"></i>
+                    </div>
+                    <h3 class="h4">Improved Air Quality</h3>
+                    <p>Plants filter pollutants and produce oxygen, creating cleaner air in urban environments. One square meter of green roof can filter approximately 0.2 kg of dust and smog particles annually.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <div class="rounded-circle bg-primary bg-opacity-10 p-3 d-inline-flex mb-3">
+                        <i class="fas fa-temperature-low fa-2x text-primary"></i>
+                    </div>
+                    <h3 class="h4">Temperature Regulation</h3>
+                    <p>Green roofs reduce the urban heat island effect by absorbing heat and providing natural cooling. They can reduce surrounding air temperatures by up to 3°C during summer months.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <div class="rounded-circle bg-warning bg-opacity-10 p-3 d-inline-flex mb-3">
+                        <i class="fas fa-tint fa-2x text-warning"></i>
+                    </div>
+                    <h3 class="h4">Water Management</h3>
+                    <p>Roof gardens absorb rainwater, reducing stormwater runoff by 50-90% depending on the depth of the growing medium and rainfall intensity.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <div class="rounded-circle bg-danger bg-opacity-10 p-3 d-inline-flex mb-3">
+                        <i class="fas fa-bolt fa-2x text-danger"></i>
+                    </div>
+                    <h3 class="h4">Energy Efficiency</h3>
+                    <p>Green roofs provide natural insulation, reducing heating and cooling costs by up to 15-30%, depending on the climate and building structure.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <div class="rounded-circle bg-info bg-opacity-10 p-3 d-inline-flex mb-3">
+                        <i class="fas fa-heart fa-2x text-info"></i>
+                    </div>
+                    <h3 class="h4">Mental Wellbeing</h3>
+                    <p>Access to green spaces has been shown to reduce stress, improve mood, and enhance overall mental health in urban residents.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <div class="rounded-circle bg-success bg-opacity-10 p-3 d-inline-flex mb-3">
+                        <i class="fas fa-carrot fa-2x text-success"></i>
+                    </div>
+                    <h3 class="h4">Food Production</h3>
+                    <p>Urban roof gardens can be used to grow vegetables, herbs, and fruits, promoting food security and reducing the carbon footprint associated with food transportation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Get Started Section -->
+    <div class="row mb-5" id="get-started">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-5">How to Get Started</h2>
+            <p class="lead">Follow these steps to create your own urban roof garden</p>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h3 class="mb-3">Planning Your Roof Garden</h3>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Structural Assessment</h4>
+                                <p class="mb-0">Consult with a structural engineer to ensure your roof can support the additional weight of soil, plants, and water.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Waterproofing</h4>
+                                <p class="mb-0">Ensure proper waterproofing and drainage systems to prevent water damage to the building structure.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Climate Considerations</h4>
+                                <p class="mb-0">Consider your local climate, sun exposure, and wind conditions when planning your garden layout and selecting plants.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Legal Requirements</h4>
+                                <p class="mb-0">Check local building codes, permits, and regulations related to roof modifications and garden installations.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Budget Planning</h4>
+                                <p class="mb-0">Develop a realistic budget that includes materials, plants, irrigation systems, and potential professional services.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h3 class="mb-3">Implementation Steps</h3>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Roof Preparation</h4>
+                                <p class="mb-0">Clean the roof surface and install a waterproof membrane, root barrier, and drainage layer.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Growing Medium</h4>
+                                <p class="mb-0">Add a lightweight growing medium specifically designed for roof gardens, typically a mix of compost, perlite, and lightweight aggregates.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Irrigation System</h4>
+                                <p class="mb-0">Install an efficient irrigation system, such as drip irrigation or self-watering containers, to minimize water usage.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Plant Selection</h4>
+                                <p class="mb-0">Choose plants that are suitable for your climate, roof conditions, and maintenance capabilities.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-start">
+                            <div>
+                                <h4 class="h6 mb-1">Maintenance Plan</h4>
+                                <p class="mb-0">Develop a regular maintenance schedule for watering, fertilizing, pruning, and pest management.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-light">
+                <div class="card-body p-4">
+                    <h3 class="mb-3">Types of Roof Gardens</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="h5 mb-3">Extensive Green Roofs</h4>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Lightweight (60-150 kg/m²)</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Shallow growing medium (5-15 cm)</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Low maintenance plants (sedums, mosses)</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Minimal irrigation required</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Lower cost option</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="h5 mb-3">Intensive Green Roofs</h4>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Heavier (180-500 kg/m²)</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Deeper growing medium (15-100 cm)</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Diverse plants (shrubs, small trees)</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Regular irrigation needed</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Higher maintenance requirements</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="h5 mb-3">Container Gardens</h4>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Flexible and movable</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Various container sizes and materials</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Suitable for vegetables and herbs</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Easier to implement</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Good for beginners</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended Plants Section -->
+    <div class="row mb-5" id="plants">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-5">Recommended Plants</h2>
+            <p class="lead">Plants that thrive in urban roof environments</p>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1596644462291-1e82d98a28c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 180px; object-fit: cover;" alt="Sedum">
+                <div class="card-body">
+                    <h3 class="h5">Sedum (Stonecrop)</h3>
+                    <p class="small text-muted mb-2">Drought-tolerant succulent</p>
+                    <ul class="small">
+                        <li>Extremely hardy and low-maintenance</li>
+                        <li>Thrives in full sun and poor soil</li>
+                        <li>Available in various colors and textures</li>
+                        <li>Perfect for extensive green roofs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1520302630591-fd1c66edc19d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 180px; object-fit: cover;" alt="Lavender">
+                <div class="card-body">
+                    <h3 class="h5">Lavender</h3>
+                    <p class="small text-muted mb-2">Aromatic herb</p>
+                    <ul class="small">
+                        <li>Drought-resistant once established</li>
+                        <li>Attracts pollinators like bees</li>
+                        <li>Provides beautiful purple blooms</li>
+                        <li>Requires good drainage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1504198322253-cfa87a0ff60f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 180px; object-fit: cover;" alt="Ornamental Grasses">
+                <div class="card-body">
+                    <h3 class="h5">Ornamental Grasses</h3>
+                    <p class="small text-muted mb-2">Versatile and hardy</p>
+                    <ul class="small">
+                        <li>Provides movement and texture</li>
+                        <li>Many drought-tolerant varieties</li>
+                        <li>Low maintenance requirements</li>
+                        <li>Creates habitat for small wildlife</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1599685315640-4a9ba2613f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 180px; object-fit: cover;" alt="Herbs">
+                <div class="card-body">
+                    <h3 class="h5">Culinary Herbs</h3>
+                    <p class="small text-muted mb-2">Practical and aromatic</p>
+                    <ul class="small">
+                        <li>Rosemary, thyme, sage, oregano</li>
+                        <li>Drought-tolerant Mediterranean herbs</li>
+                        <li>Useful for cooking</li>
+                        <li>Many are perennial</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12 mt-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="mb-3">Plant Selection Tips</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="h6 mb-2">Consider These Factors:</h4>
+                            <ul>
+                                <li>Local climate and hardiness zone</li>
+                                <li>Sun exposure on your roof</li>
+                                <li>Wind conditions at roof level</li>
+                                <li>Depth of growing medium</li>
+                                <li>Water availability and irrigation system</li>
+                                <li>Maintenance time and accessibility</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="h6 mb-2">Plant Characteristics to Look For:</h4>
+                            <ul>
+                                <li>Drought tolerance</li>
+                                <li>Wind resistance</li>
+                                <li>Shallow root systems</li>
+                                <li>Low maintenance requirements</li>
+                                <li>Resistance to pests and diseases</li>
+                                <li>Adaptability to extreme temperatures</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Stories Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-5">Success Stories</h2>
+            <p class="lead">Inspiring urban roof plantation projects around the world</p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 200px; object-fit: cover;" alt="Brooklyn Grange">
+                <div class="card-body">
+                    <h3 class="h5">Brooklyn Grange, New York</h3>
+                    <p>The world's largest rooftop soil farms, spanning over 5.6 acres across multiple buildings in New York City. They produce over 80,000 pounds of organically-grown produce annually.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 200px; object-fit: cover;" alt="Gardens by the Bay">
+                <div class="card-body">
+                    <h3 class="h5">Gardens by the Bay, Singapore</h3>
+                    <p>This iconic urban garden features extensive green roofs and vertical gardens, showcasing how cities can integrate nature into urban architecture on a large scale.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1558435186-db8a2a9383f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                     class="card-img-top" style="height: 200px; object-fit: cover;" alt="Community Garden">
+                <div class="card-body">
+                    <h3 class="h5">Community Rooftop Gardens, Toronto</h3>
+                    <p>Toronto's Green Roof Bylaw has led to the creation of numerous community rooftop gardens, providing fresh produce and green space for urban residents while reducing the city's carbon footprint.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Section -->
+    <div class="row mb-5" id="shop">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-5">Roof Plantation Shop</h2>
+            <p class="lead">Everything you need to start your urban garden</p>
+        </div>
+        
+        {% if featured_products %}
+        <div class="row">
+            {% for product in featured_products %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-0 shadow-sm product-card">
+                    {% if product.discount_price %}
+                    <div class="position-absolute top-0 end-0 bg-danger text-white px-2 py-1 m-2 rounded-pill">
+                        -{{ product.get_discount_percentage }}%
+                    </div>
+                    {% endif %}
+                    <div class="card-img-top overflow-hidden" style="height: 200px;">
+                        <img src="{{ product.image.url }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="{{ product.name }}">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-light text-dark">{{ product.get_category_display }}</span>
+                            {% if product.stock > 0 %}
+                            <span class="badge bg-success">In Stock</span>
+                            {% else %}
+                            <span class="badge bg-danger">Out of Stock</span>
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-muted small mb-3">{{ product.description|truncatechars:80 }}</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    {% if product.discount_price %}
+                                    <span class="text-decoration-line-through text-muted me-2">₹{{ product.price }}</span>
+                                    <span class="fw-bold text-danger">₹{{ product.discount_price }}</span>
+                                    {% else %}
+                                    <span class="fw-bold">₹{{ product.price }}</span>
+                                    {% endif %}
+                                </div>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-sm btn-outline-success">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'roof_plantation_shop' %}" class="btn btn-success">View All Products</a>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                <p class="mb-0">Shop products coming soon! Check back later for gardening supplies and plants.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-success bg-opacity-10">
+                <div class="card-body p-4 text-center">
+                    <h2 class="mb-3">Ready to Start Your Urban Roof Garden?</h2>
+                    <p class="lead mb-4">Join our community of urban gardeners and transform your roof into a green oasis.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'roof_plantation_shop' %}" class="btn btn-success">Shop Now</a>
+                        <a href="#get-started" class="btn btn-outline-success">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

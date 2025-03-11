@@ -1,0 +1,247 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Recycling Centers - EcoSmart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-3">Recycling Centers</h1>
+            <p class="lead mb-4">Find recycling centers near you to properly dispose of your waste materials.</p>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-8 mb-3 mb-md-0">
+            <div class="input-group">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by name, address, or accepted materials...">
+                <button class="btn btn-success" type="button">
+                    <i class="fas fa-search me-2"></i>Search
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select id="categoryFilter" class="form-select">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div id="map" style="height: 400px; width: 100%;" class="rounded">
+                        <!-- Map will be loaded here -->
+                        <div class="d-flex justify-content-center align-items-center h-100 bg-light">
+                            <p class="text-muted">Map loading... If the map doesn't appear, please ensure location services are enabled.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Centers List -->
+    <div class="row" id="centersList">
+        {% if centers %}
+            {% for center in centers %}
+            <div class="col-lg-6 mb-4 center-card" data-categories="{{ center.categories_accepted.all|join:', ' }}" data-description="{{ center.description }}">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            {% if center.image %}
+                            <img src="{{ center.image.url }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ center.name }}">
+                            {% else %}
+                            <div class="bg-light d-flex justify-content-center align-items-center h-100 rounded-start">
+                                <i class="fas fa-recycle fa-3x text-success"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ center.name }}</h5>
+                                <p class="card-text small text-muted mb-2">
+                                    <i class="fas fa-map-marker-alt me-2"></i>{{ center.address }}
+                                </p>
+                                <p class="card-text small text-muted mb-2">
+                                    <i class="fas fa-phone me-2"></i>{{ center.phone }}
+                                </p>
+                                <p class="card-text small text-muted mb-2">
+                                    <i class="fas fa-clock me-2"></i>{{ center.opening_hours }}
+                                </p>
+                                
+                                <div class="mb-3">
+                                    <h6 class="small fw-bold">Accepts:</h6>
+                                    <div>
+                                        {% for category in center.categories_accepted.all %}
+                                        <span class="badge bg-success me-1 mb-1">{{ category.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between mt-auto">
+                                    <button class="btn btn-sm btn-outline-success view-details" data-center-id="{{ center.id }}">
+                                        <i class="fas fa-info-circle me-1"></i>Details
+                                    </button>
+                                    <a href="https://maps.google.com/?q={{ center.address|urlencode }}" target="_blank" class="btn btn-sm btn-success">
+                                        <i class="fas fa-directions me-1"></i>Directions
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <p class="mb-0">No recycling centers found. Please check back later.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Center Details Modal -->
+<div class="modal fade" id="centerDetailsModal" tabindex="-1" aria-labelledby="centerDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="centerDetailsModalLabel">Center Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="centerDetailsContent">
+                <!-- Center details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="#" id="getDirectionsBtn" target="_blank" class="btn btn-success">
+                    <i class="fas fa-directions me-1"></i>Get Directions
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const centerCards = document.querySelectorAll('.center-card');
+        
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            centerCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Category filter
+        const categoryFilter = document.getElementById('categoryFilter');
+        
+        categoryFilter.addEventListener('change', function() {
+            const selectedCategory = this.value.toLowerCase();
+            
+            if (!selectedCategory) {
+                centerCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+                return;
+            }
+            
+            centerCards.forEach(card => {
+                const categories = card.dataset.categories.toLowerCase();
+                if (categories.includes(selectedCategory)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Center details modal
+        const detailButtons = document.querySelectorAll('.view-details');
+        const centerDetailsContent = document.getElementById('centerDetailsContent');
+        const getDirectionsBtn = document.getElementById('getDirectionsBtn');
+        const centerDetailsModal = document.getElementById('centerDetailsModal');
+        let modalInstance = null;
+        
+        // Initialize Bootstrap modal
+        if (typeof bootstrap !== 'undefined') {
+            modalInstance = new bootstrap.Modal(centerDetailsModal);
+        }
+        
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const centerId = this.dataset.centerId;
+                const centerCard = this.closest('.center-card');
+                const centerName = centerCard.querySelector('.card-title').textContent;
+                const centerAddress = centerCard.querySelector('.card-text:nth-child(2)').textContent.trim();
+                const centerPhone = centerCard.querySelector('.card-text:nth-child(3)').textContent.trim();
+                const centerHours = centerCard.querySelector('.card-text:nth-child(4)').textContent.trim();
+                const centerCategories = centerCard.querySelector('.mb-3').innerHTML;
+                const centerDescription = centerCard.dataset.description || 'No additional information available.';
+                
+                // Update modal content
+                centerDetailsContent.innerHTML = `
+                    <h4>${centerName}</h4>
+                    <p>${centerAddress}</p>
+                    <p>${centerPhone}</p>
+                    <p>${centerHours}</p>
+                    <div class="mb-3">
+                        <h6>Accepts:</h6>
+                        ${centerCategories}
+                    </div>
+                    <div class="mb-3">
+                        <h6>Description:</h6>
+                        <p>${centerDescription}</p>
+                    </div>
+                `;
+                
+                // Update directions link
+                const addressOnly = centerAddress.replace('<i class="fas fa-map-marker-alt me-2"></i>', '');
+                getDirectionsBtn.href = `https://maps.google.com/?q=${encodeURIComponent(addressOnly)}`;
+                
+                // Show modal
+                if (modalInstance) {
+                    modalInstance.show();
+                } else if (typeof bootstrap !== 'undefined') {
+                    // Try to initialize modal again if it wasn't available earlier
+                    modalInstance = new bootstrap.Modal(centerDetailsModal);
+                    modalInstance.show();
+                } else {
+                    console.error('Bootstrap modal functionality not available');
+                    // Fallback - show modal using basic display property
+                    centerDetailsModal.style.display = 'block';
+                }
+            });
+        });
+        
+        // Initialize map (placeholder - would need Google Maps API integration)
+        function initMap() {
+            // This would be implemented with actual Google Maps API
+            console.log('Map initialization would happen here');
+        }
+        
+        // Call map initialization
+        // initMap(); // Uncomment when Google Maps API is integrated
+    });
+</script>
+{% endblock %}

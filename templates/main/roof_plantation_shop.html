@@ -1,0 +1,130 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Roof Plantation Shop - EcoSmart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-3">Roof Plantation Shop</h1>
+            <p class="lead mb-4">Everything you need to create and maintain your urban roof garden</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Sidebar with Categories -->
+        <div class="col-lg-3 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Categories</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'roof_plantation_shop' %}" class="list-group-item list-group-item-action {% if not current_category %}active{% endif %}">
+                            All Products
+                        </a>
+                        {% for cat_code, cat_name in categories %}
+                        <a href="{% url 'roof_plantation_shop_category' cat_code %}" class="list-group-item list-group-item-action {% if current_category == cat_code %}active{% endif %}">
+                            {{ cat_name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Price Filter -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Filter by Price</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get">
+                        <div class="mb-3">
+                            <label for="min_price" class="form-label">Min Price</label>
+                            <input type="number" class="form-control" id="min_price" name="min_price" min="0" step="0.01">
+                        </div>
+                        <div class="mb-3">
+                            <label for="max_price" class="form-label">Max Price</label>
+                            <input type="number" class="form-control" id="max_price" name="max_price" min="0" step="0.01">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Apply Filter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="col-lg-9">
+            {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm product-card">
+                        {% if product.discount_price %}
+                        <div class="position-absolute top-0 end-0 bg-danger text-white px-2 py-1 m-2 rounded-pill">
+                            -{{ product.get_discount_percentage }}%
+                        </div>
+                        {% endif %}
+                        <div class="card-img-top overflow-hidden" style="height: 200px;">
+                            <img src="{{ product.image.url }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="{{ product.name }}">
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-light text-dark">{{ product.get_category_display }}</span>
+                                {% if product.stock > 0 %}
+                                <span class="badge bg-success">In Stock</span>
+                                {% else %}
+                                <span class="badge bg-danger">Out of Stock</span>
+                                {% endif %}
+                            </div>
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted small mb-3">{{ product.description|truncatechars:80 }}</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if product.discount_price %}
+                                        <span class="text-decoration-line-through text-muted me-2">₹{{ product.price }}</span>
+                                        <span class="fw-bold text-danger">₹{{ product.discount_price }}</span>
+                                        {% else %}
+                                        <span class="fw-bold">₹{{ product.price }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{% url 'product_detail' product.id %}" class="btn btn-sm btn-outline-success">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <p class="mb-0">No products found in this category. Please check back later or browse other categories.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Featured Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-light">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h2 class="mb-3">Start Your Urban Garden Today</h2>
+                            <p class="mb-4">Transform your urban space with our high-quality gardening products. Our experts have curated the best tools, plants, and accessories to help you create a thriving roof garden.</p>
+                            <a href="{% url 'roof_plantation' %}" class="btn btn-success">Learn More About Roof Plantation</a>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                                 class="img-fluid rounded" alt="Urban Gardening">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

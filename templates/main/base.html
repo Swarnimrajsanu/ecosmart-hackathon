@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}Waste Management System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% if user.is_authenticated %}user-authenticated{% endif %}">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+                <i class="fas fa-recycle me-2"></i>
+                <span class="d-none d-sm-inline">EcoSmart</span>
+                <span class="d-inline d-sm-none">ES</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">
+                            <i class="fas fa-home me-2 d-inline d-lg-none"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'recycling_centers' in request.path %}active{% endif %}" href="{% url 'recycling_centers' %}">
+                            <i class="fas fa-recycle me-2 d-inline d-lg-none"></i>Recycling Centers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'educational_content' in request.path %}active{% endif %}" href="{% url 'educational_content' %}">
+                            <i class="fas fa-book me-2 d-inline d-lg-none"></i>Learn More
+                        </a>
+                    </li>
+                    <!-- Urban Initiatives -->
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'roof_plantation' in request.path %}active{% endif %}" href="{% url 'roof_plantation' %}">
+                            <i class="fas fa-seedling me-2 d-inline d-lg-none"></i>Roof Plantation
+                        </a>
+                    </li>
+                    <!-- AI Features -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if 'waste_classifier' in request.path or 'chatbot' in request.path %}active{% endif %}" href="#" id="aiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-robot me-2 d-inline d-lg-none"></i>AI Tools
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="aiDropdown">
+                            <li>
+                                <a class="dropdown-item {% if 'waste_classifier' in request.path %}active{% endif %}" href="{% url 'waste_classifier' %}">
+                                    <i class="fas fa-camera me-2"></i>Waste Classifier
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {% if 'chatbot' in request.path %}active{% endif %}" href="{% url 'chatbot' %}">
+                                    <i class="fas fa-comments me-2"></i>EcoBot Assistant
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    {% if user.is_authenticated %}
+                        <!-- Authenticated User Menu -->
+                        <div class="user-menu d-none d-lg-flex">
+                            <div class="user-avatar">
+                                {{ user.username|first|upper }}
+                            </div>
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ user.username }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <a class="dropdown-item {% if 'request_collection' in request.path %}active{% endif %}" href="{% url 'request_collection' %}">
+                                            <i class="fas fa-truck me-2"></i>Request Collection
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item {% if 'my_requests' in request.path %}active{% endif %}" href="{% url 'my_requests' %}">
+                                            <i class="fas fa-list me-2"></i>My Requests
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form method="post" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile view for authenticated users -->
+                        <li class="nav-item d-lg-none auth-nav-item">
+                            <a class="nav-link request-collection-btn {% if 'request_collection' in request.path %}active{% endif %}" href="{% url 'request_collection' %}">
+                                <i class="fas fa-truck me-2"></i>Request Collection
+                            </a>
+                        </li>
+                        <li class="nav-item d-lg-none auth-nav-item">
+                            <a class="nav-link my-requests-btn {% if 'my_requests' in request.path %}active{% endif %}" href="{% url 'my_requests' %}">
+                                <i class="fas fa-list me-2"></i>My Requests
+                            </a>
+                        </li>
+                        <li class="nav-item d-lg-none auth-nav-item">
+                            <form method="post" action="{% url 'logout' %}" class="nav-link p-0">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn w-100">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light ms-2" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt me-2 d-inline d-lg-none"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-success ms-2" href="{% url 'register' %}">
+                                <i class="fas fa-user-plus me-2 d-inline d-lg-none"></i>Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <main class="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="mb-3">About Us</h5>
+                    <p class="mb-0">EcoSmart is dedicated to making waste management efficient and environmentally friendly.</p>
+                </div>
+                <div class="col-6 col-md-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="{% url 'home' %}" class="text-light"><i class="fas fa-chevron-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="{% url 'recycling_centers' %}" class="text-light"><i class="fas fa-chevron-right me-2"></i>Recycling Centers</a></li>
+                        <li class="mb-2"><a href="{% url 'educational_content' %}" class="text-light"><i class="fas fa-chevron-right me-2"></i>Learn More</a></li>
+                        <li class="mb-2"><a href="{% url 'roof_plantation' %}" class="text-light"><i class="fas fa-chevron-right me-2"></i>Roof Plantation</a></li>
+                        <li class="mb-2"><a href="{% url 'waste_classifier' %}" class="text-light"><i class="fas fa-chevron-right me-2"></i>AI Waste Classifier</a></li>
+                        <li class="mb-2"><a href="{% url 'chatbot' %}" class="text-light"><i class="fas fa-chevron-right me-2"></i>EcoBot Assistant</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-4">
+                    <h5 class="mb-3">Contact Us</h5>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i>info@ecosmart.com</p>
+                    <p class="mb-0"><i class="fas fa-phone me-2"></i>(555) 123-4567</p>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; 2024 EcoSmart. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

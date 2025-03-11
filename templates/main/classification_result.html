@@ -1,0 +1,86 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Classification Result - EcoSmart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h4 mb-0"><i class="fas fa-check-circle me-2"></i>Classification Result</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img src="{{ classification.image.url }}" alt="Waste image" class="img-fluid rounded mb-3">
+                        </div>
+                        <div class="col-md-7">
+                            <h3 class="mb-3">{{ classification.predicted_category.name }}</h3>
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: {{ classification.confidence_score|floatformat:0 }}%;" 
+                                     aria-valuenow="{{ classification.confidence_score|floatformat:0 }}" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                    {{ classification.confidence_score|floatformat:0 }}% Confidence
+                                </div>
+                            </div>
+                            <p>{{ classification.predicted_category.description }}</p>
+                            
+                            <div class="mt-4">
+                                <h4 class="h5 mb-3">Disposal Instructions:</h4>
+                                <div class="bg-light p-3 rounded">
+                                    <p class="mb-0">
+                                        {% if classification.predicted_category.name == 'Plastic' %}
+                                            Clean and rinse the plastic item. Check for recycling symbols (1-7) to determine recyclability. Place in the appropriate recycling bin.
+                                        {% elif classification.predicted_category.name == 'Paper' %}
+                                            Paper products can be recycled. Remove any plastic or metal attachments. Place in paper recycling bin.
+                                        {% elif classification.predicted_category.name == 'Glass' %}
+                                            Rinse glass containers. Remove caps and lids. Place in glass recycling bin. Broken glass should be wrapped and placed in general waste.
+                                        {% elif classification.predicted_category.name == 'Metal' %}
+                                            Clean metal items. Aluminum cans, steel cans, and foil can be recycled. Place in metal recycling bin.
+                                        {% elif classification.predicted_category.name == 'Organic' %}
+                                            Organic waste can be composted. Place in compost bin or green waste collection.
+                                        {% elif classification.predicted_category.name == 'Electronic' %}
+                                            Electronic waste should not be placed in regular trash. Take to an e-waste recycling center or retailer with e-waste collection.
+                                        {% else %}
+                                            Please check local guidelines for proper disposal of this type of waste. When in doubt, contact your local waste management authority.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <a href="{% url 'waste_classifier' %}" class="btn btn-primary me-2">
+                            <i class="fas fa-camera me-2"></i>Classify Another Item
+                        </a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'request_collection' %}" class="btn btn-success">
+                            <i class="fas fa-truck me-2"></i>Request Collection
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm border-0 rounded-lg mt-4">
+                <div class="card-header bg-light">
+                    <h3 class="h5 mb-0">Try Our AI Chatbot</h3>
+                </div>
+                <div class="card-body">
+                    <p>Have questions about how to properly dispose of or recycle this item? Our AI chatbot can help!</p>
+                    <div class="text-center">
+                        <a href="{% url 'chatbot' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-comments me-2"></i>Chat with EcoBot
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
